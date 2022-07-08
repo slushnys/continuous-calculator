@@ -1,5 +1,8 @@
 {
   "name": "continuous-calculator",
+  "scripts": {
+    "test": "jest --coverage --collectCoverageFrom 'src/**/*.ts'",
+  },
   "devDependencies": {
     "@serverless/typescript": "^3.19.0",
     "@swc/core": "^1.2.210",

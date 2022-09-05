@@ -4,7 +4,8 @@ A simple calculator application that works between AWS services with GitHub Acti
 
 ## Requirements
 
-Two functions app that work between each other
+* Two functions app that work between each other
+* CI / CD
 
 ## Database Design
 
@@ -51,3 +52,4 @@ VALIDATION: {
 1. We receive a `GET` request with `userId` as parameter.
 2. Search dynamoDB acces for that userId. Get the reference to results.
 3. Fetch results from S3 document, parse them and return response as JSON.
+

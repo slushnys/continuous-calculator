@@ -30,7 +30,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::348680313903:role/GitHub-Actions-Role
+          role-to-assume: arn:aws:iam::348680313903:role/github_actions_role
           aws-region: eu-west-1
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3

@@ -1,5 +1,9 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
-import { DynamoDBDocumentClient, BatchWriteCommand } from '@aws-sdk/lib-dynamodb'
+import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
+
+import { makeCalculationRepository } from '../../repositories/calculation'
+
+const calculationRepository = makeCalculationRepository()
 
 export function makeProcessCalculation({
     s3Client,
@@ -27,36 +31,7 @@ export function makeProcessCalculation({
                 Body: JSON.stringify({ result }),
             })
         )
-        await dynamoDbDocumentClient.send(
-            new BatchWriteCommand({
-                RequestItems: {
-                    'dev-CalculationResultsTable': [
-                        {
-                            PutRequest: {
-                                Item: {
-                                    partitionKey: userId,
-                                    sortKey: 'latest',
-
-                                    storedAt,
-                                    createdAt: new Date().toISOString(),
-                                },
-                            },
-                        },
-                        {
-                            PutRequest: {
-                                Item: {
-                                    partitionKey: userId,
-                                    sortKey: calculationTimestamp,
-
-                                    storedAt,
-                                    createdAt: new Date().toISOString(),
-                                },
-                            },
-                        },
-                    ],
-                },
-            })
-        )
+        await calculationRepository.addCalculation(userId, storedAt)
         return result
     }
 }

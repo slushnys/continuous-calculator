@@ -1,16 +1,14 @@
+import 'reflect-metadata'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
 import { makeCalculationRepository } from '../../repositories/calculation'
 
-const calculationRepository = makeCalculationRepository()
-
 export function makeProcessCalculation({
     s3Client,
-    dynamoDbDocumentClient,
+    calculationRepository,
 }: {
-    dynamoDbDocumentClient: DynamoDBDocumentClient
     s3Client: S3Client
+    calculationRepository: ReturnType<typeof makeCalculationRepository>
 }) {
     return async function processCalculation({
         userId,
